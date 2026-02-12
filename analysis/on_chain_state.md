@@ -213,7 +213,7 @@ The shared config object `0x692f8e28827bba47f59e84cb37924fef805c419850fe8d2508d4
 
 | Field | Type | Live Value | Interpretation |
 |-------|------|------------|----------------|
-| `a1cf5727aac3dee05` | address | `0xd265672...` | **Owner/admin address** |
+| `a1cf5727aac3dee05` | address | `0xd265672730b0540ffd3569530682a0f02ef984b703457790554eb0e19329663a` | **Owner/admin address** |
 | `adb133bf959620b1a` | bool | `true` | **Bot enabled** |
 | `a7f1f6920b2de2e7c` | bool | `true` | **Feature flag A** |
 | `a7cea368357b7d971` | bool | `false` | **Feature flag B** |
@@ -294,11 +294,27 @@ This is likely a shared interface pattern -- the `pricing` module (which has fri
 
 ## How to Reproduce
 
+### Setup
+
 ```bash
-# Install sui-sandbox
+# Install sui-sandbox (https://github.com/Evan-Kim2028/sui-sandbox)
 git clone https://github.com/Evan-Kim2028/sui-sandbox
 cd sui-sandbox && cargo build --release
+```
 
+A gRPC endpoint with historical data is required for transaction replay. Configure in `.env`:
+
+```bash
+SUI_GRPC_ENDPOINT=https://grpc.surflux.dev:443
+SUI_GRPC_API_KEY=<your-api-key>
+SUI_GRAPHQL_ENDPOINT=https://graphql.mainnet.sui.io/graphql
+```
+
+Public Sui fullnodes (`fullnode.mainnet.sui.io`) prune historical data after ~2 epochs, so transactions older than that require a gRPC provider with archival coverage (e.g. [Surflux](https://surflux.dev)).
+
+### Static Analysis (Bytecode Inspection)
+
+```bash
 # Fetch the package with dependencies
 ./target/release/sui-sandbox fetch package \
   0xe3b9bd64ba2fb3256293c3fc0119994ec6fc7c96541680959de4d7052be65973 \
@@ -308,7 +324,41 @@ cd sui-sandbox && cargo build --release
 ./target/release/sui-sandbox view modules \
   0xe3b9bd64ba2fb3256293c3fc0119994ec6fc7c96541680959de4d7052be65973
 
-# View a specific module
+# View a specific module with full struct/function signatures
 ./target/release/sui-sandbox view module \
   0xe3b9bd64ba2fb3256293c3fc0119994ec6fc7c96541680959de4d7052be65973::stonker --json
 ```
+
+### Transaction Replay (PTB Re-execution)
+
+```bash
+# Replay a transaction and compare effects against on-chain results
+./target/release/sui-sandbox replay <TRANSACTION_DIGEST> --compare --verbose
+```
+
+Example replays from this analysis:
+
+```bash
+# Order cancellation (5 inputs, 10 mutated objects)
+./target/release/sui-sandbox replay 7kMBy9LW6NshWEGi6TvAjeMUu1mc9TugY93RmRRbwf2r --compare --verbose
+
+# Multi-DEX rebalance (21 inputs, 22-argument MoveCall)
+./target/release/sui-sandbox replay HXAygNqYf7AP1JgtTXT4SmJAJ8Q6vG5TWjb6aBgkfgGY --compare --verbose
+
+# Config update (2 inputs)
+./target/release/sui-sandbox replay DsgegauRVGMvVxEMeySoRceJTSGZa15F63pFxHMA2Hzr --compare --verbose
+```
+
+### Replay Methodology
+
+The `sui-sandbox replay` command re-executes a historical Programmable Transaction Block (PTB) locally and verifies that the locally-computed effects match what was recorded on-chain. The process:
+
+1. **Fetch transaction data**: Retrieves the full transaction via gRPC at the transaction's checkpoint. This includes the PTB commands, all input object references, the gas budget, and the sender address.
+
+2. **Resolve input objects at historical versions**: Each input object (shared or owned) is fetched at the exact version it had when the transaction originally executed. This ensures the local VM sees the same state the validators saw.
+
+3. **Resolve package dependencies at checkpoint**: All Move packages referenced by the transaction (both direct and transitive dependencies) are fetched at the versions specified in the package's linkage table. For upgraded packages, the linkage table maps original package IDs to their upgraded storage addresses (see the Linkage Table in [architecture.md](architecture.md)).
+
+4. **Re-execute in local Move VM**: The PTB is executed command-by-command in an embedded Sui Move VM instance with the resolved objects and packages loaded as the execution store.
+
+5. **Compare effects**: The locally-produced transaction effects (status, created objects, mutated objects, deleted objects) are compared field-by-field against the on-chain effects. A full match confirms the replay faithfully reproduced the original execution.

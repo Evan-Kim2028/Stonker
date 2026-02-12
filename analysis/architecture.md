@@ -56,16 +56,16 @@ Key observations:
 
 | Protocol | Package Address | Modules Used |
 |----------|----------------|-------------|
-| Deepbook v3 | `0x2c8d603b...` | balance_manager, order, pool |
-| Cetus CLMM | `0x1eabed72...` | config, pool, position, rewarder |
-| Turbos | `0x91bfbc38...` | fee500bps, pool |
-| Bluefin | `0x3492c874...` | config, pool |
-| MMT | `0x70285592...` | pool, position, version |
-| NAVI Lending | `0xd899cf7d...` | incentive_v2, incentive_v3, pool, storage |
-| NAVI Oracle | `0xca441b44...` | oracle |
-| Pyth Network | `0x8d97f1cd...` | hot_potato_vector, price_info, state |
-| Wormhole | `0x5306f64e...` | state |
-| Integer Mate | `0x714a63a0...` | i32 |
+| Deepbook v3 | `0x2c8d603bc51326b8c13cef9dd07031a408a48dddb541963357661df5d3204809` | balance_manager, order, pool |
+| Cetus CLMM | `0x1eabed72c53feb3805120a081dc15963c204dc8d091542592abaf7a35689b2fb` | config, pool, position, rewarder |
+| Turbos | `0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1` | fee500bps, pool |
+| Bluefin | `0x3492c874c1e3b3e2984e8c41b589e642d4d0a5d6459e5a9cfc2d52fd7c89c267` | config, pool |
+| MMT | `0x70285592c97965e811e0c6f98dccc3a9c2b4ad854b3594faab9597ada267b860` | pool, position, version |
+| NAVI Lending | `0xd899cf7d2b5db716bd2cf55599fb0d5ee38a3061e7b6bb6eebf73fa5bc4c81ca` | incentive_v2, incentive_v3, pool, storage |
+| NAVI Oracle | `0xca441b44943c16be0e6e23c5a955bb971537ea3289ae8016fbf33fffe1fd210f` | oracle |
+| Pyth Network | `0x8d97f1cd6ac663735be08d1d2b6d02a159e711586461306ce60a2b7a6a565a9e` | hot_potato_vector, price_info, state |
+| Wormhole | `0x5306f64e312b581766351c07af79c72fcb1cd25147157fdc2f8ad76de9a3fb6a` | state |
+| Integer Mate | `0x714a63a0dba6da4f017b42d5d0fb78867f18bcde904868e51d951a5a6f5b7f57` | i32 |
 
 ### Linkage Table (Dependency Versions)
 
@@ -73,21 +73,21 @@ Key observations:
 
 | Dependency | Original ID | Upgraded Storage ID | Version |
 |-----------|-------------|-------------------|---------|
-| Sui Framework | `0x0001...` | _(same)_ | 20 |
-| Sui Core | `0x0002...` | _(same)_ | 48 |
-| Sui System | `0x0003...` | _(same)_ | 28 |
-| Deepbook v3 | `0x2c8d603b...` | `0x00c1a56e...` | 4 |
-| Cetus CLMM | `0x1eabed72...` | `0x25ebb9a7...` | 14 |
-| Turbos | `0x91bfbc38...` | `0xa5a0c25c...` | 22 |
-| Bluefin | `0x3492c874...` | `0xd075338d...` | 17 |
-| MMT | `0x70285592...` | `0xcf60a40f...` | 5 |
-| NAVI | `0xd899cf7d...` | `0xee004123...` | 23 |
-| NAVI Oracle | `0xca441b44...` | `0xc2d49bf5...` | 3 |
-| NAVI Utils | `0xbe21a061...` | `0x8569b7ef...` | 5 |
-| Integer Mate | `0x714a63a0...` | `0xdfaadf86...` | 7 |
-| Pyth | `0x8d97f1cd...` | `0x04e20ddf...` | 2 |
-| USDC | `0xdba34672...` | _(same)_ | 1 |
-| DEEP Token | `0xdeeb7a46...` | _(same)_ | 1 |
+| Sui Framework | `0x0000000000000000000000000000000000000000000000000000000000000001` | _(same)_ | 20 |
+| Sui Core | `0x0000000000000000000000000000000000000000000000000000000000000002` | _(same)_ | 48 |
+| Sui System | `0x0000000000000000000000000000000000000000000000000000000000000003` | _(same)_ | 28 |
+| Deepbook v3 | `0x2c8d603bc51326b8c13cef9dd07031a408a48dddb541963357661df5d3204809` | `0x00c1a56ec8c4c623a848b2ed2f03d23a25d17570b670c22106f336eb933785cc` | 4 |
+| Cetus CLMM | `0x1eabed72c53feb3805120a081dc15963c204dc8d091542592abaf7a35689b2fb` | `0x25ebb9a7c50eb17b3fa9c5a30fb8b5ad8f97caaf4928943acbcff7153dfee5e3` | 14 |
+| Turbos | `0x91bfbc386a41afcfd9b2533058d7e915a1d3829089cc268ff4333d54d6339ca1` | `0xa5a0c25c79e428eba04fb98b3fb2a34db45ab26d4c8faf0d7e39d66a63891e64` | 22 |
+| Bluefin | `0x3492c874c1e3b3e2984e8c41b589e642d4d0a5d6459e5a9cfc2d52fd7c89c267` | `0xd075338d105482f1527cbfd363d6413558f184dec36d9138a70261e87f486e9c` | 17 |
+| MMT | `0x70285592c97965e811e0c6f98dccc3a9c2b4ad854b3594faab9597ada267b860` | `0xcf60a40f45d46fc1e828871a647c1e25a0915dec860d2662eb10fdb382c3c1d1` | 5 |
+| NAVI | `0xd899cf7d2b5db716bd2cf55599fb0d5ee38a3061e7b6bb6eebf73fa5bc4c81ca` | `0xee0041239b89564ce870a7dec5ddc5d114367ab94a1137e90aa0633cb76518e0` | 23 |
+| NAVI Oracle | `0xca441b44943c16be0e6e23c5a955bb971537ea3289ae8016fbf33fffe1fd210f` | `0xc2d49bf5e75d2258ee5563efa527feb6155de7ac6f6bf025a23ee88cd12d5a83` | 3 |
+| NAVI Utils | `0xbe21a06129308e0495431d12286127897aff07a8ade3970495a4404d97f9eaaa` | `0x8569b7efebec65c73b9dc15c5ac2a9542870d286fa79a3feedffbaa94ed53002` | 5 |
+| Integer Mate | `0x714a63a0dba6da4f017b42d5d0fb78867f18bcde904868e51d951a5a6f5b7f57` | `0xdfaadf86be9af246900d1e3f3b996cf549e7948e662a9977bdd7646d8fa3a778` | 7 |
+| Pyth | `0x8d97f1cd6ac663735be08d1d2b6d02a159e711586461306ce60a2b7a6a565a9e` | `0x04e20ddf36af412a4096f9014f4a565af9e812db9a05cc40254846cf6ed0ad91` | 2 |
+| USDC | `0xdba34672e30cb065b1f93e3ab55318768fd6fef66c15942c9f7cb846e2f900e7` | _(same)_ | 1 |
+| DEEP Token | `0xdeeb7a4662eec9f2f3def03fb937a663dddaa2e215b8078a284d026b7946c270` | _(same)_ | 1 |
 
 ## Module Size Summary
 
